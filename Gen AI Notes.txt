@@ -1,0 +1,86 @@
+Image Generation Model Families:
+--------------------------------
+
+- Variational AutoEncoders - VAEs : Encode images to a compressed size, then decode back to the original size, while learning the distribution of data.
+- Generative Adversarial Models - GANs : Pit 2 neural networks against each other. One neural network the generator creates images and other neural network 
+ the discriminator predicts if images real or fake. Overtime generator and discriminator get better.
+- Autoregressive Models: Generate images by treating an image as a sequence of pixels.
+*** - Diffusion Models: Idea is to systematically and slowly destroy structure in a data distribution through an iterative forward diffusion process.We then 
+learn a reverse diffusion process that restores structure in data, yielding a highly flexible and tractable generative model of data.
+
+usecases 
+a. Unconditioned generation : Human Face Synthesis, super-resolution
+b. Conditioned generation: Text to image, Image inpainting, Text guided image to image
+
+Challenges of diffusion models : difficult to control, generate images that are not realistic, computationally expensive to train.
+
+Attention Mechanism:
+--------------------
+
+Encoder-Decoder takes 1 word at a time and tranlates at each time step.
+Attention mechanism is a technique that allows NN to focus on a specific parts of input sequence which is done by assigning weights to different parts of input
+sequence with most important parts receiving highest weights.
+Traditional RNN encoder decoder model takes 1 word at a time as input, updates hidden state and passes to next time step. In the end only the final hidden 
+state is passed on to decoder. Decoder works with final hidden state for processing and translates to target language.
+Attention model differs from traditional sequence-to-sequence model in 2 ways. 
+a.Encoder passes a lot more data to the decoder. Instead of passing the final hidden step at each time step it passes all the hidden states. This gives decoder 
+more context than just a final hidden state. Decoder uses all hidden state information to translate the sentence.
+b.Adding an extra step to attention decoder before producing its output. 
+  1. Look at the set of encoder hidden states that it received.
+  2. Give each hidden state a score.
+  3. Multiply each hidden state by its soft-maxed score.
+  
+Transformer
+-------------
+Transformer is a encoder decoder model that uses attention mechanism. It takes advantage of parallelization GPU\TPU. Process much more data in the same amount
+of time. Process all tokens at once.
+
+Input -> Input Embedding + Positional Encoding -> Encoder component -> Decoder component <- Output Embedding + Positional Encoding
+Decoder component -> Linear -> Softmax -> Output
+
+Encoder component = self attention + Feed Forward
+Decoder component = self attention + encoder-decoder attention + Feed Forward
+
+In Self attention layer, input embedding is broken into query vector, key vector, value vector. These vectors are calculated using weights that transformer 
+learns during training process. Then multiply each value vector by softmax score and sum them up. 
+
+Pretrained transformer models:
+Encoder & Decoder -> BART
+Decoder only -> GPT 2, GPT 3
+Encoder only -> BERT
+
+BERT (Bidirectional Encoder Representation from Tranformer) is trained in 2 variations(Base 12 layer transformers 110M parameters, Large 24 layer transfomers
+340M parameters).
+Able to handle long input context. Trained on entire wikipedia and BookCorpus. Trained for 1 million steps. Trained at multi-task objective. Trained on TPU.
+Works both at sentence level and token level. 
+
+BERT is trained on 2 different tasks MLM, NPS.
+MLM - Masked Language Modeling. Mask out k% of input words and then predict the masked words. recommendation for k is 15. Too little masking is too expensive
+to train. Too much masking is does not have enough context.
+NPS - Next Sentence Prediction. Learn the relationship between sentences and predict the next sentence given the first one.
+
+To train BERT we need feed 3 kinds of embedding to the model. For the input sentence we get 3 embeddings that are token, segment and position.
+
+
+Gen AI
+-------
+Vertex AI : An end to end ML development platform to build, deploy and Manage ML models.
+ Generative AI Studio: Develop a generative AI application.
+  Prompt Design - App developers
+  Tuning - Data scientists
+ Model Garden: Build and automate a generative AI model
+  Foundation models: Data Scientists
+  Pretrained models: ML Developers
+  
+PaLM2 model for building generative ai applications. PaLM2 has 2 variant models text-bison-001 and chat-bison-001  
+There are 4 main sizes of PaLM2 models:
+ Gecko - aimed at mobile devices
+ Otter - little bigger than Gecko 
+ Bison - 
+ Unicorn - It is not made public yet.
+
+ 
+
+
+
+
